@@ -7,9 +7,9 @@ import (
 )
 
 func main() {
-	m := ulam(233)
-	s := stringMatrix(m)
-	fmt.Println(s)
+	for n := 1; n <= 26; n++ {
+		fmt.Printf("n = %d\n%s\n\n", n, stringMatrix(ulam(n)))
+	}
 }
 
 func make2D(x, y int) [][]int {
@@ -127,14 +127,14 @@ func stringMatrix(matrix [][]int) string {
 	for y := range matrix {
 		var xs []string
 		for x := range matrix[y] {
-			var s string
+			s := " "
 			// removing zeros for ease of viewing
 			if matrix[x][y] != 0 {
-				s = fmt.Sprintf("%d", matrix[x][y])
+				s = "•"
 			}
 			xs = append(xs, s)
 		}
-		ys = append(ys, strings.Join(xs, "\t"))
+		ys = append(ys, strings.Join(xs, " "))
 	}
 	return strings.Join(ys, "\n")
 }
