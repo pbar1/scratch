@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	m := ulam(100)
+	m := ulam(233)
 	s := stringMatrix(m)
 	fmt.Println(s)
 }
@@ -41,18 +41,15 @@ func pentagonal(n int) int {
 // ulam creates the partial Ulam Spiral of unsigned integers up to a given number
 func ulam(n int) [][]int {
 	side := int(math.Ceil(math.Sqrt(float64(n))))
-	part := make2D(side, side)
+	spiral := make2D(side, side)
 
-	originX := int(math.Ceil(float64(side)/2 - 1))
-	originY := int(math.Floor(float64(side) / 2))
-
-	counter := 1
-	posX := originX
-	posY := originY
+	posX := int(math.Ceil(float64(side)/2 - 1))
+	posY := int(math.Floor(float64(side) / 2))
 	facing := 0 // initially facing south
+	counter := 1
 
 	for {
-		part[posX][posY] = counter
+		spiral[posX][posY] = counter
 		counter++
 		if counter > n {
 			break
@@ -61,14 +58,14 @@ func ulam(n int) [][]int {
 		_, peekLeftX, peekLeftY := moveLeft(facing, posX, posY)
 		if peekLeftX < 0 || peekLeftX >= side || peekLeftY < 0 || peekLeftY >= side {
 			panic(fmt.Sprintf("n: %d, side: %d, counter: %d, posX: %d, posY: %d, facing: %d", n, side, counter, posX, posY, facing))
-		} else if part[peekLeftX][peekLeftY] == 0 {
+		} else if spiral[peekLeftX][peekLeftY] == 0 {
 			facing, posX, posY = moveLeft(facing, posX, posY)
 		} else {
 			_, posX, posY = moveForward(facing, posX, posY)
 		}
 	}
 
-	return part
+	return spiral
 }
 
 /******************************************************************************
